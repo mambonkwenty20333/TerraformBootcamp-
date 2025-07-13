@@ -2,7 +2,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.1.1"
 
-  name = "${eks-nebulance}-vpc"
+  name = "${var.cluster_name}-vpc"
   cidr = var.vpc_cidr
 
   azs             = var.availability_zones
@@ -24,7 +24,7 @@ module "eks" {
 
   cluster_name    = var.cluster_name
   cluster_version = "1.28"
-  subnets         = module.vpc.private_subnets
+  subnet_ids      = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
 
   enable_irsa = true  # Important for External Secrets
